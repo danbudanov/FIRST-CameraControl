@@ -39,8 +39,14 @@ private:
 	int16_t buttonData[16];
     int16_t joystickPos;
     int prevZoom;
+    int zoomAxis;
 public:
-	Joystick(){
+	Joystick(int joystickType){
+        if(joystickType == 1) {
+            zoomAxis = 2;
+        } else {
+            zoomAxis = 3;
+        }
 		this->joystickFD=NULL; //default
 		this->devicePath="/dev/input/js0";
 		this->crc=0;
@@ -72,6 +78,8 @@ public:
 
     // next and prev zooms to more effectively use joystick zoom
     int getPrevZoom() {return prevZoom;}
+    int getZoomAxis() {return zoomAxis;}
+
     void setPrevZoom() {
         prevZoom = this->getZoomData();
     }

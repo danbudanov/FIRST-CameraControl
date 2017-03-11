@@ -17,7 +17,13 @@ int CameraFD3=2;
 void axisControl(Joystick* joystick);
 void buttonControl(Joystick* joystick);
 
-int main(){
+int main(int argc, char* argv[]){
+    int joystickType = 0; // set the joystick type
+                        // default gray joysticks = 0, zoom axis=3
+                        // janky black joysticks  = 1, zoom axis=2
+    if (argc >=2) {
+        joystickType  = *argv[1] - '0';
+    }
 	//Camera::CameraFD=2; //lol, print commands to stderr - just for debug running so we can remove the noise
 	CameraFD1=simpleConnectToHost("10.44.44.52",5678);
 	while(CameraFD1<=0) CameraFD1=simpleConnectToHost("10.44.44.52",5678);
@@ -27,10 +33,15 @@ int main(){
 	while(CameraFD3<=0) CameraFD3=simpleConnectToHost("10.44.44.53",5678);
 
 	Camera::CameraFD=CameraFD1; //start with the first camera
-	Joystick joystick;
+
+    Joystick joystick (joystickType); 
+
+	//Joystick joystick;
 	joystick.connect_tryUntillSucess("/dev/input/js0"); //make our joystick available to us
 	joystick.setDeadzone(joystick.getMaxAxisSize()/0x14);
 
+    printf("Starting joystick with type : %d\n", joystickType);
+    printf("Zoom axis is %d\n", joystick.getZoomAxis());
 	printf("CameraFD1 : %d\n",CameraFD1);
 	printf("CameraFD2 : %d\n",CameraFD2);
 	printf("CameraFD3 : %d\n",CameraFD3);
@@ -183,7 +194,7 @@ void axisControl(Joystick* joystick){
 			Camera::rotate("downLeft",LR,UD);
 			printf("LR :: UD  ==  %6d :: %6d  down  left \n",LR,UD);
 		}
-	}else if(joystick->getInputNumber()==3){
+	}else if(joystick->getInputNumber()==joystick->getZoomAxis()) {
 
 			ZP = joystick->getData() ;//* -1;
             ZP = ZP - joystick->getPrevZoom();
