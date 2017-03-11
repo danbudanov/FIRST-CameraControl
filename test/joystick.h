@@ -150,7 +150,7 @@ public:
 	}
 
 	int16_t getZoomData(){
-		return this->axisData[3];
+		return this->axisData[zoomAxis];
 	}
 
 	uint16_t getButtonData(int num){
