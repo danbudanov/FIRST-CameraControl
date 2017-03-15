@@ -3,7 +3,7 @@
 #include <string>
 #include <unistd.h>
 #include <cmath>
-#include "../libs/stdSocketTools.h"
+#include "stdSocketTools.h"
 #include "joystick.h"
 #include "cameraControl.h"
 
