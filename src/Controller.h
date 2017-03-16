@@ -14,6 +14,10 @@ public:
 
     void chage_camera(std::shared_ptr<Camera> camera);
 
+    std::shared_ptr<Joystick> joystick() const;
+
+    std::shared_ptr<Camera> camera() const;
+
 private:
     std::shared_ptr<Joystick> _joystick;
 

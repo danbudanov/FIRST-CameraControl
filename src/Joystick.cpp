@@ -7,8 +7,6 @@ using namespace std;
 Joystick::Joystick(int index)
     : _joystick(nullptr, _joy_deleter)
 {
-    SDL_InitSubSystem(SDL_INIT_JOYSTICK);
-
     auto joystickCount = NumberOfConnectJoysticks();
 
     if(joystickCount <= index || index < 0) {
@@ -55,6 +53,10 @@ void Joystick::set_deadzone(int index, double value) {
 
 void Joystick::set_all_deadzones(double value) {
     fill(_deadzones.begin(), _deadzones.end(), value);
+}
+
+void Joystick::Init() {
+    SDL_InitSubSystem(SDL_INIT_JOYSTICK);
 }
 
 int Joystick::NumberOfConnectJoysticks() {

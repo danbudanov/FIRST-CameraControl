@@ -29,6 +29,8 @@ public:
 
     void set_all_deadzones(double value);
 
+    static void Init();
+
     static int NumberOfConnectJoysticks();
 
 private:

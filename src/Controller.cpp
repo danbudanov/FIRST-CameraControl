@@ -49,6 +49,14 @@ void Controller::axis_control() {
 //    _prev_zoom = zoom;
 }
 
+std::shared_ptr<Joystick> Controller::joystick() const {
+    return _joystick;
+}
+
+std::shared_ptr<Camera> Controller::camera() const {
+    return _camera;
+}
+
 void Controller::button_control() {
     // Emergency stop button
     if(_joystick->button(0)){
