@@ -3,9 +3,29 @@
 #include "Camera.h"
 
 using namespace std;
+using boost::asio::ip::udp;
 
-Camera::Camera() {
-    // TODO open camera
+Camera::Camera(std::string ip_address, boost::asio::io_service &io_service)
+    : _io_service(io_service),
+      _socket(_io_service, udp::endpoint(udp::v4(), 0))
+{
+    udp::resolver resolver(_io_service);
+    udp::resolver::query query(udp::v4(), ip_address, "5678");
+    udp::resolver::iterator resolver_iterator = resolver.resolve(query);
+    _endpoint = *resolver_iterator;
+
+    /*
+     * TODO open camera
+     * Boost::ASIO UDP example: https://gist.github.com/kaimallea/e112f5c22fe8ca6dc627
+     *
+     * addresses: 10.44.44.[51|52|53]
+     * port numer: 5678
+     *
+     */
+}
+
+Camera::~Camera() {
+    _socket.close();
 }
 
 void Camera::save_preset(uint8_t number) {
@@ -40,8 +60,6 @@ void Camera::rotate(double pan, double tilt) {
 
 void Camera::zoom(double speed) {
     uint8_t power = static_cast<uint8_t>(zoom_max() * abs(speed));
-
-    cout << "Zoom: " << to_string(power) << endl;
 
     uint8_t direction = 0x00;
     if(speed < 0)
@@ -79,5 +97,5 @@ void Camera::stop() {
 }
 
 void Camera::send_command(std::vector<uint8_t> command) {
-    // TODO send command
+    _socket.send_to(boost::asio::buffer(command.data(), command.size()), _endpoint);
 }

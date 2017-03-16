@@ -21,9 +21,11 @@ void set_SIGINT_handler() {
 
 int main(int argc, char* argv[]){
 
+    boost::asio::io_service io_service;
+
     shared_ptr<Joystick> joystick = make_shared<Joystick>(0);
 
-    shared_ptr<Camera> camera = make_shared<Camera>();
+    shared_ptr<Camera> camera = make_shared<Camera>("10.44.44.51", io_service);
 
     joystick->set_all_deadzones(1.0/20.0);
 

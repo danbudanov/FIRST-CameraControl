@@ -28,19 +28,25 @@ void Controller::chage_camera(std::shared_ptr<Camera> camera) {
 }
 
 void Controller::axis_control() {
-    _camera->rotate(_joystick->axis(0), _joystick->axis(1));
+    auto pan = _joystick->axis(0);
+    auto tilt = _joystick->axis(1);
+
+    if(pan != _prev_pan || tilt != _prev_tilt) {
+        _camera->rotate(pan, tilt);
+    }
+
+    _prev_pan = pan;
+    _prev_tilt = tilt;
 
     // TODO wut is this differential zoom
 
-    auto zoom = _joystick->axis(3);
-
-    cout << zoom << endl;
-
-    auto delta_zoom = zoom - _prev_zoom;
-
-    _camera->zoom(delta_zoom);
-
-    _prev_zoom = zoom;
+//    auto zoom = _joystick->axis(3);
+//
+//    auto delta_zoom = zoom - _prev_zoom;
+//
+//    _camera->zoom(delta_zoom);
+//
+//    _prev_zoom = zoom;
 }
 
 void Controller::button_control() {

@@ -3,6 +3,11 @@ project(FIRST_CameraControl)
 
 set(CMAKE_CXX_STANDARD 14)
 
+find_package(Boost REQUIRED COMPONENTS system)
+include_directories(SYSTEM ${Boost_INCLUDE_DIRS})
+
+find_package (Threads)
+
 # SDL2
 include(FindPkgConfig)
 pkg_search_module(SDL2 REQUIRED sdl2)
@@ -16,4 +21,4 @@ set(SOURCE_FILES
         src/Camera.cpp)
 
 add_executable(FIRST_CameraControl ${SOURCE_FILES})
-target_link_libraries(FIRST_CameraControl ${SDL2_LIBRARIES})
+target_link_libraries(FIRST_CameraControl ${SDL2_LIBRARIES} ${Boost_LIBRARIES} ${CMAKE_THREAD_LIBS_INIT})

@@ -3,10 +3,13 @@
 
 #include <cstdint>
 #include <vector>
+#include <boost/asio.hpp>
 
 class Camera {
 public:
-    Camera();
+    Camera(std::string ip_address, boost::asio::io_service &io_service);
+
+    ~Camera();
 
     void save_preset(uint8_t number);
 
@@ -51,6 +54,10 @@ public:
     }
 
 private:
+
+    boost::asio::io_service& _io_service;
+    boost::asio::ip::udp::socket _socket;
+    boost::asio::ip::udp::endpoint _endpoint;
 
     void send_command(std::vector<uint8_t> command);
 

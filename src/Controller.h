@@ -21,6 +21,9 @@ private:
 
     double _prev_zoom = 0;
 
+    double _prev_pan = 0;
+    double _prev_tilt = 0;
+
     void axis_control();
 
     void button_control();
