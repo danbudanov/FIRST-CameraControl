@@ -20,33 +20,34 @@ void set_SIGINT_handler() {
     sigaction(SIGINT, &sigIntHandler, NULL);
 }
 
-int main(int argc, char* argv[]){
+int main(){
 
     Joystick::Init();
 
-    std::vector<std::string> camera_IPs = {
-            "10.44.44.51",
-            "10.44.44.52",
-            "10.44.44.53"
+    vector<pair<string, string>> camera_details {
+            {"Blue", "10.44.44.51"},
+            {"Center", "10.44.44.52"},
+            {"Red", "10.44.44.53"}
     };
 
     boost::asio::io_service io_service;
 
-    auto joystick_count = Joystick::NumberOfConnectJoysticks();
+    size_t joystick_count = static_cast<size_t>(Joystick::NumberOfConnectJoysticks());
 
     cout << "Found " << joystick_count << " joysticks." << endl;
 
-    cout << "Conecting to " << min(joystick_count, static_cast<int>(camera_IPs.size())) << " cameras." << endl;
+    cout << "Conecting to " << min(joystick_count, static_cast<size_t>(camera_details.size())) << " cameras." << endl;
 
     std::vector<Controller> controllers;
 
-    for(auto i = 0; i < joystick_count && i < camera_IPs.size(); ++i) {
-        cout << "Assigning joystick " << i << " to camera at " << camera_IPs[i] << "." << endl;
-        controllers.emplace_back(make_shared<Joystick>(i), make_shared<Camera>(camera_IPs[i], io_service));
+    for(size_t i = 0; i < joystick_count && i < camera_details.size(); ++i) {
+        cout << "Assigning joystick " << i << " to camera " << camera_details[i].first << "(" << camera_details[i].second << ")." << endl;
+        controllers.emplace_back(make_shared<Joystick>(i), make_shared<Camera>(camera_details[i].first, camera_details[i].second, io_service));
     }
 
     for(auto &controller : controllers) {
-        controller.joystick()->set_all_deadzones(1.0/20.0);
+        controller.joystick()->set_deadzone(0, 0.75);
+        controller.joystick()->set_deadzone(1, 0.75);
     }
 
 	while(running){

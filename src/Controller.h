@@ -23,14 +23,18 @@ private:
 
     std::shared_ptr<Camera> _camera;
 
-    double _prev_zoom = 0;
-
+    Joystick::HatDirection _prev_hat = Joystick::HatDirection::CENTERED;
     double _prev_pan = 0;
     double _prev_tilt = 0;
+    double _prev_speed = 0;
+
+    std::array<bool,12> _prev_button;
 
     void axis_control();
 
     void button_control();
+
+    void set_prev_buttons();
 
 };
 

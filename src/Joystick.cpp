@@ -55,6 +55,22 @@ void Joystick::set_all_deadzones(double value) {
     fill(_deadzones.begin(), _deadzones.end(), value);
 }
 
+int Joystick::num_axes() const {
+    return SDL_JoystickNumAxes(_joystick.get());
+}
+
+int Joystick::num_buttons() const {
+    return SDL_JoystickNumButtons(_joystick.get());
+}
+
+int Joystick::num_hats() const {
+    return SDL_JoystickNumHats(_joystick.get());
+}
+
+Joystick::HatDirection Joystick::hat(int index) {
+    return static_cast<HatDirection>(SDL_JoystickGetHat(_joystick.get(), index));
+}
+
 void Joystick::Init() {
     SDL_InitSubSystem(SDL_INIT_JOYSTICK);
 }

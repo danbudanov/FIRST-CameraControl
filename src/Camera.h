@@ -7,7 +7,7 @@
 
 class Camera {
 public:
-    Camera(std::string ip_address, boost::asio::io_service &io_service);
+    Camera(std::string name, std::string ip_address, boost::asio::io_service &io_service);
 
     ~Camera();
 
@@ -15,9 +15,24 @@ public:
 
     void recall_preset(uint8_t number);
 
+    enum class RotateType {
+        STOP,
+        UP,
+        DOWN,
+        LEFT,
+        RIGHT,
+        UP_LEFT,
+        UP_RIGHT,
+        DOWN_LEFT,
+        DOWN_RIGHT
+    };
+
     void rotate(double pan = 0, double tilt = 0);
 
+    void rotate(Camera::RotateType type, double speed_factor = 0.5);
+
     enum class ZoomType {
+        STOP,
         TELE,
         WIDE
     };
@@ -55,13 +70,24 @@ public:
 
 private:
 
+    std::string _name;
+
     boost::asio::io_service& _io_service;
-    boost::asio::ip::udp::socket _socket;
-    boost::asio::ip::udp::endpoint _endpoint;
+    boost::asio::ip::tcp::socket _socket;
 
     void send_command(std::vector<uint8_t> command);
 
+    void tcp_connect_with_timeout(const std::string& host, const std::string& service,
+                                  boost::posix_time::time_duration timeout);
+
 };
 
+inline Camera::RotateType operator & (const Camera::RotateType  &a, const Camera::RotateType  &b) {
+    return static_cast<Camera::RotateType >(static_cast<int>(a) & static_cast<int>(b));
+}
+
+inline Camera::RotateType  operator | (const Camera::RotateType  &a, const Camera::RotateType  &b) {
+    return static_cast<Camera::RotateType >(static_cast<int>(a) | static_cast<int>(b));
+}
 
 #endif //FIRST_CAMERACONTROL_CAMERA_H
