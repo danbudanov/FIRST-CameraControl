@@ -40,7 +40,13 @@ int main(){
 
     cout << "Found " << joystick_count << " joysticks." << endl;
 
-    cout << "Conecting to " << min(joystick_count, static_cast<size_t>(camera_details.size())) << " cameras." << endl;
+    auto connection_count =  min(joystick_count, static_cast<size_t>(camera_details.size()));
+
+    cout << "Conecting to " << connection_count << " cameras." << endl;
+
+    if(connection_count == 0) {
+        return 0;
+    }
 
     std::vector<Controller> controllers;
 
