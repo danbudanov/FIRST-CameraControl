@@ -14,6 +14,7 @@ Camera::Camera(std::string name, std::string ip_address, boost::asio::io_service
 
     try {
         tcp_connect_with_timeout(ip_address, "5678", boost::posix_time::seconds(10));
+        cout << "Connected to camera " << name << "!" << endl;
     } catch(const boost::system::system_error &e) {
         if(e.code() == boost::asio::error::operation_aborted) {
             cerr << "ERROR: Connecting to camera " << _name << " timed out." << endl;
@@ -147,7 +148,12 @@ void Camera::stop() {
 
 void Camera::send_command(std::vector<uint8_t> command) {
     if(_socket.is_open()) {
-        _socket.send(boost::asio::buffer(command.data(), command.size()));
+        try {
+            _socket.send(boost::asio::buffer(command.data(), command.size()));
+        } catch(const boost::exception_detail::clone_impl<boost::exception_detail::error_info_injector<boost::system::system_error> > &er) {
+            cerr << "Error: Communication to camera " << _name << " failed.\nYou have likely lost connection. This camera will now be disabled." << endl;
+            _socket.close();
+        }
     }
 }
 
@@ -161,16 +167,23 @@ void Camera::tcp_connect_with_timeout(const std::string &host, const std::string
 
     boost::system::error_code ec = boost::asio::error::would_block;
 
-    boost::asio::async_connect(_socket, endpoint_iter, [&ec](const boost::system::error_code& error, const tcp::resolver::iterator&){ ec = error; });
+    /*
+     * TODO Boost's async connect seems to have a bug in it as this causes only the first camera to work.
+     * May be related to https://svn.boost.org/trac/boost/ticket/8795
+     */
 
-    timer.async_wait([this](const boost::system::error_code&){
-        _socket.close();
-    });
+//    boost::asio::async_connect(_socket, endpoint_iter, [&ec](const boost::system::error_code& error, const tcp::resolver::iterator&){ ec = error; });
 
-    // Block until the asynchronous operation has completed.
-    while(ec == boost::asio::error::would_block) {
-        _io_service.run_one();
-    }
+//    timer.async_wait([this](const boost::system::error_code&){
+//        _socket.close();
+//    });
+
+//    // Block until the asynchronous operation has completed.
+//    while(ec == boost::asio::error::would_block) {
+//        _io_service.run_one();
+//    }
+
+    _socket.connect(*endpoint_iter, ec);
 
     if (ec || !_socket.is_open())
         throw boost::system::system_error(

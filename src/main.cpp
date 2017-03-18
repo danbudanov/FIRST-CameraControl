@@ -24,6 +24,10 @@ int main(){
 
     Joystick::Init();
 
+    /*
+     * TODO make a config file that contains camera IPs, names, and Joystick GUIDs and their mappings.
+     */
+
     vector<pair<string, string>> camera_details {
             {"Blue", "10.44.44.51"},
             {"Center", "10.44.44.52"},
@@ -46,8 +50,8 @@ int main(){
     }
 
     for(auto &controller : controllers) {
-        controller.joystick()->set_deadzone(0, 0.75);
-        controller.joystick()->set_deadzone(1, 0.75);
+        controller.joystick()->set_deadzone(0, 0.25);
+        controller.joystick()->set_deadzone(1, 0.25);
     }
 
 	while(running){

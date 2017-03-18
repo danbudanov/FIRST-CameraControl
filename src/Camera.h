@@ -56,6 +56,10 @@ public:
 
     void stop();
 
+    inline std::string name() const {
+        return _name;
+    }
+
     static inline uint8_t pan_max() {
         return 24;
     }
