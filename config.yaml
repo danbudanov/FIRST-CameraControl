@@ -1,0 +1,7 @@
+cameras:
+- name: Blue
+  ip: 10.4.44.51
+- name: Center
+  ip: 10.44.44.52
+- name: Red
+  ip: 10.44.44.53

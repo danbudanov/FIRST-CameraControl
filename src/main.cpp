@@ -3,6 +3,7 @@
 #include "Joystick.h"
 #include "Camera.h"
 #include "Controller.h"
+#include "Configuration.h"
 
 using namespace std;
 
@@ -28,11 +29,11 @@ int main(){
      * TODO make a config file that contains camera IPs, names, and Joystick GUIDs and their mappings.
      */
 
-    vector<pair<string, string>> camera_details {
-            {"Blue", "10.44.44.51"},
-            {"Center", "10.44.44.52"},
-            {"Red", "10.44.44.53"}
-    };
+    Configuration config{"config.yaml"};
+
+    auto camera_details = config.cameras();
+
+    cout << "Found " << camera_details.size() << " cameras in config file." << endl;
 
     boost::asio::io_service io_service;
 
@@ -51,8 +52,8 @@ int main(){
     std::vector<Controller> controllers;
 
     for(size_t i = 0; i < joystick_count && i < camera_details.size(); ++i) {
-        cout << "Assigning joystick " << i << " to camera " << camera_details[i].first << "(" << camera_details[i].second << ")." << endl;
-        controllers.emplace_back(make_shared<Joystick>(i), make_shared<Camera>(camera_details[i].first, camera_details[i].second, io_service));
+        cout << "Assigning joystick " << i << " to camera " << camera_details[i].name << "(" << camera_details[i].ip_address << ")." << endl;
+        controllers.emplace_back(make_shared<Joystick>(i), make_shared<Camera>(camera_details[i].name, camera_details[i].ip_address, io_service));
     }
 
     for(auto &controller : controllers) {
