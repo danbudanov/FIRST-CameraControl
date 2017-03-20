@@ -7,13 +7,17 @@
 
 class Camera {
 public:
-    Camera(std::string name, std::string ip_address, boost::asio::io_service &io_service);
+    Camera(std::string name, std::string ip_address, uint8_t default_preset, boost::asio::io_service &io_service);
 
     ~Camera();
 
     void save_preset(uint8_t number);
 
     void recall_preset(uint8_t number);
+
+    inline uint8_t default_preset() const {
+        return _default_preset;
+    }
 
     enum class RotateType {
         STOP,
@@ -75,6 +79,8 @@ public:
 private:
 
     std::string _name;
+
+    uint8_t _default_preset;
 
     boost::asio::io_service& _io_service;
     boost::asio::ip::tcp::socket _socket;

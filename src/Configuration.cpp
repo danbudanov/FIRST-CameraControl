@@ -17,6 +17,9 @@ Configuration::Configuration(string filepath) {
         camera.name = node["name"].as<string>();
         camera.ip_address = node["ip"].as<string>();
 
+        if(node["dafault-preset"])
+            camera.default_preset = node["default-preset"].as<uint8_t>();
+
         _cameras.push_back(camera);
     }
 }

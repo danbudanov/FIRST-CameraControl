@@ -6,10 +6,17 @@ This repository contains code used by the [Georgia FIRST Robotics Competition](h
  
  #### Dependencies
  
- This application depends on [Cmake](), [Boost](), and [SDL 2.0](). In Linux, these can be installed with the following command:
+ This application depends on these widely-available packages: 
+ 
+ * [Cmake](https://cmake.org/)
+ * [Boost](http://www.boost.org/)
+ * [SDL 2.0](https://www.libsdl.org/)
+ * [YAML-CPP](https://github.com/jbeder/yaml-cpp)
+ 
+ In Linux, these can be installed with the following command:
  
  ```
- sudo apt-get install cmake libsdl2-2.0-0 libboost-all-dev
+ sudo apt-get install cmake libsdl2-2.0-0 libboost-all-dev libyaml-cpp-dev
  ```
  
  #### Installation
@@ -23,8 +30,32 @@ This repository contains code used by the [Georgia FIRST Robotics Competition](h
  make
  ```
  
- This will generate the FIRST_CameraControl binary executable in the cmake-build-debug folder.
+ This will generate the _FIRST_CameraControl_ binary executable in the _cmake-build-debug_ folder.
  
  ## Usage
+ 
+ #### Setup
+ 
+ Ensure that config.yaml (in the _cmake-build-debug_ folder) contains correct information for your cameras. Follow the example already there to generate entries for each of your cameras.
+ 
+ #### Run
+ 
+ From a terminal, run `./FIRST_CameraControl`. It will tell you how many camera entries it found in the config file and how many joysticks it detects are connected to the computer. Messages will be displayed as the application connects to each camera. Once all are connected, you should be able to control the cameras from your joysticks.
+ 
+ #### Controls
+ 
+ Basic pan-tilt functionality is mapped to the joystick's x and y axes. The speed of these motions is controlled by the paddle at the base of the joystick.
+ 
+ The camera can be zoomed in and out using the direction hat on top of the joystick. Push forward to zoom in, pull back to zoom out.
+ 
+ If the camera begins moving unexpectedly, pull the trigger button to send a stop command to the camera.
+ 
+ The camera has the capacity to store 10, user-defined, preset positions. These positions can be recalled using the labeled buttons (3 - 12) on the top and base of the joystick.
+  
+ The thumb button on the side of the joystick will recall the default preset, configurable in the config file.
+ 
+ #### Troubleshooting
+ 
+ There are a variety of network issues which can cause connection errors between this software and the cameras. In the event of one of these issues, this software will disable the individual camera to prevent the interruption of control for other cameras. Once the connection to the cameras has been reestablished, simply restart the software to reconnect to all cameras.
  
  

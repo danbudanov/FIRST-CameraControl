@@ -1,7 +1,10 @@
 cameras:
 - name: Blue
   ip: 10.4.44.51
+  default-preset: 1
 - name: Center
   ip: 10.44.44.52
+  default-preset: 1
 - name: Red
   ip: 10.44.44.53
+  default-preset: 1

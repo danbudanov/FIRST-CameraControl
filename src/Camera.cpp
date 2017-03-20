@@ -5,8 +5,9 @@
 using namespace std;
 using boost::asio::ip::tcp;
 
-Camera::Camera(std::string name, std::string ip_address, boost::asio::io_service &io_service)
+Camera::Camera(std::string name, std::string ip_address, uint8_t default_preset, boost::asio::io_service &io_service)
     : _name(name),
+      _default_preset(default_preset),
       _io_service(io_service),
       _socket(_io_service)
 {

@@ -7,6 +7,7 @@
 struct CameraDetails {
     std::string name;
     std::string ip_address;
+    uint8_t default_preset = 0;
 };
 
 class Configuration {

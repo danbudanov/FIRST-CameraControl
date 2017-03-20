@@ -106,8 +106,8 @@ void Controller::button_control() {
     // Go to a preset
     if(_joystick->button(1) && !_prev_button[1]) {
         // Default preset position
-        _camera->recall_preset(1);
-        cout << setw(12) << _camera->name() << "\tRecalling preset 1\n";
+        _camera->recall_preset(_camera->default_preset());
+        cout << setw(12) << _camera->name() << "\tRecalling preset " << _camera->default_preset() << "\n";
     } else if(_joystick->button(2) && !_prev_button[2]) {
         _camera->recall_preset(0);
         cout << setw(12) << _camera->name() << "\tRecalling preset 0\n";

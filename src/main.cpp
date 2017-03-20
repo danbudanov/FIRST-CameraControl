@@ -1,5 +1,7 @@
 #include <signal.h>
 #include <iostream>
+#include <chrono>
+#include <thread>
 #include "Joystick.h"
 #include "Camera.h"
 #include "Controller.h"
@@ -22,6 +24,8 @@ void set_SIGINT_handler() {
 }
 
 int main(){
+
+    set_SIGINT_handler();
 
     Joystick::Init();
 
@@ -53,7 +57,7 @@ int main(){
 
     for(size_t i = 0; i < joystick_count && i < camera_details.size(); ++i) {
         cout << "Assigning joystick " << i << " to camera " << camera_details[i].name << "(" << camera_details[i].ip_address << ")." << endl;
-        controllers.emplace_back(make_shared<Joystick>(i), make_shared<Camera>(camera_details[i].name, camera_details[i].ip_address, io_service));
+        controllers.emplace_back(make_shared<Joystick>(i), make_shared<Camera>(camera_details[i].name, camera_details[i].ip_address, camera_details[i].default_preset, io_service));
     }
 
     for(auto &controller : controllers) {
@@ -61,10 +65,12 @@ int main(){
         controller.joystick()->set_deadzone(1, 0.25);
     }
 
+    auto t = chrono::system_clock::now();
+
 	while(running){
-        for(auto &controller : controllers) {
-            controller.update();
-        }
+        for_each(controllers.begin(), controllers.end(), bind(&Controller::update, placeholders::_1));
+        t += 10ms;
+        this_thread::sleep_until(t);
 	}
 
     return 0;
