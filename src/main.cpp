@@ -29,10 +29,6 @@ int main(){
 
     Joystick::Init();
 
-    /*
-     * TODO make a config file that contains camera IPs, names, and Joystick GUIDs and their mappings.
-     */
-
     Configuration config{"config.yaml"};
 
     auto camera_details = config.cameras();

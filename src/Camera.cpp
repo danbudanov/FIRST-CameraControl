@@ -134,14 +134,6 @@ void Camera::zoom(Camera::ZoomType type) {
     send_command({0x81,0x01,0x04,0x07,direction,0xFF});
 }
 
-void Camera::focus(double) {
-    // TODO Not used yet, so not implemented yet
-}
-
-void Camera::focus(Camera::FocusType) {
-    // TODO Not used yet, so not implemented yet
-}
-
 void Camera::stop() {
     rotate();
     zoom();

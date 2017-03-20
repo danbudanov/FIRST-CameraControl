@@ -54,10 +54,6 @@ public:
         TOGGLE
     };
 
-    void focus(double speed = 0);
-
-    void focus(FocusType type);
-
     void stop();
 
     inline std::string name() const {
