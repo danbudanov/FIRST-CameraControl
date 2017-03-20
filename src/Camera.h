@@ -45,15 +45,6 @@ public:
 
     void zoom(ZoomType type);
 
-    enum class FocusType {
-        STOP,
-        FAR,
-        NEAR,
-        AUTO,
-        MANUAL,
-        TOGGLE
-    };
-
     void stop();
 
     inline std::string name() const {
