@@ -16,7 +16,7 @@ This repository contains code used by the [Georgia FIRST Robotics Competition](h
  In Linux, these can be installed with the following command:
  
  ```
- sudo apt-get install cmake libsdl2-2.0-0 libboost-all-dev libyaml-cpp-dev
+ sudo apt-get install cmake libsdl2-dev libboost-all-dev libyaml-cpp-dev
  ```
  
  #### Installation
