@@ -3,10 +3,11 @@
 
 #include "Joystick.h"
 #include "Camera.h"
+#include "Console.h"
 
 class Controller {
 public:
-    Controller(std::shared_ptr<Joystick> joystick = nullptr, std::shared_ptr<Camera> camera = nullptr);
+    Controller(std::shared_ptr<Joystick> joystick = nullptr, std::shared_ptr<Camera> camera = nullptr, std::shared_ptr<Console> console = nullptr);
 
     void update();
 
@@ -23,6 +24,8 @@ private:
 
     std::shared_ptr<Camera> _camera;
 
+    std::shared_ptr<Console> _console;
+
     Joystick::HatDirection _prev_hat = Joystick::HatDirection::CENTERED;
     double _prev_pan = 0;
     double _prev_tilt = 0;
@@ -36,7 +39,8 @@ private:
 
     void set_prev_buttons();
 
-};
+    void console_control();
 
+};
 
 #endif //FIRST_CAMERACONTROL_CONTROLLER_H

@@ -22,7 +22,7 @@ set(SOURCE_FILES
         src/Joystick.cpp
         src/Controller.cpp
         src/Camera.cpp
-        src/Configuration.cpp)
+        src/Configuration.cpp src/Console.cpp src/Console.h)
 
 add_executable(FIRST_CameraControl ${SOURCE_FILES})
 target_link_libraries(FIRST_CameraControl ${SDL2_LIBRARIES} ${Boost_LIBRARIES} ${CMAKE_THREAD_LIBS_INIT} ${YAML_CPP_LIBRARIES})

@@ -1,19 +1,23 @@
 #include <iostream>
 #include <bitset>
 #include <iomanip>
+#include <boost/tokenizer.hpp>
 #include "Controller.h"
 
 using namespace std;
 
-Controller::Controller(std::shared_ptr<Joystick> joystick, std::shared_ptr<Camera> camera)
+Controller::Controller(std::shared_ptr<Joystick> joystick, std::shared_ptr<Camera> camera, std::shared_ptr<Console> console)
     : _joystick(joystick),
-      _camera(camera)
+      _camera(camera),
+      _console(console)
 {
 }
 
 void Controller::update() {
     if(_joystick != nullptr && _camera != nullptr) {
         _joystick->update();
+
+        console_control();
 
         axis_control();
 
@@ -144,5 +148,21 @@ void Controller::button_control() {
 void Controller::set_prev_buttons() {
     for(size_t i = 0; i < _prev_button.size(); ++i) {
         _prev_button[i] = _joystick->button(i);
+    }
+}
+
+void Controller::console_control() {
+    auto& command_queue = _console->command_queue(_camera->name());
+    while(!command_queue.empty()) {
+        auto command = command_queue.front();
+        boost::tokenizer<> tokenizer{command};
+        auto token_iterator = tokenizer.begin();
+        if(*token_iterator == "set") {
+            token_iterator++;
+            auto preset_num = stoi(*token_iterator);
+            _camera->save_preset(preset_num);
+        } else {
+            cerr << "Unrecognized console command: " << command << endl;
+        }
     }
 }
