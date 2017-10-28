@@ -103,41 +103,69 @@ void Controller::button_control() {
         cout << setw(12) << _camera->name() << "\tStop\n";
     }
 
-    // Go to a preset
+    // Go to a preset (button pressed down)
     if(_joystick->button(1) && !_prev_button[1]) {
         // Default preset position
         _camera->recall_preset(_camera->default_preset());
         cout << setw(12) << _camera->name() << "\tRecalling preset " << _camera->default_preset() << "\n";
-    } else if(_joystick->button(2) && !_prev_button[2]) {
-        _camera->recall_preset(0);
-        cout << setw(12) << _camera->name() << "\tRecalling preset 0\n";
-    } else if(_joystick->button(3) && !_prev_button[3]) {
-        _camera->recall_preset(1);
-        cout << setw(12) << _camera->name() << "\tRecalling preset 1\n";
-    } else if(_joystick->button(4) && !_prev_button[4]) {
-        _camera->recall_preset(2);
-        cout << setw(12) << _camera->name() << "\tRecalling preset 2\n";
-    } else if(_joystick->button(5) && !_prev_button[5]) {
-        _camera->recall_preset(3);
-        cout << setw(12) << _camera->name() << "\tRecalling preset 3\n";
-    } else if(_joystick->button(6) && !_prev_button[6]){
-        _camera->recall_preset(4);
-        cout << setw(12) << _camera->name() << "\tRecalling preset 4\n";
-    }else if(_joystick->button(7) && !_prev_button[7]){
-        _camera->recall_preset(5);
-        cout << setw(12) << _camera->name() << "\tRecalling preset 5\n";
-    }else if(_joystick->button(8) && !_prev_button[8]){
-        _camera->recall_preset(6);
-        cout << setw(12) << _camera->name() << "\tRecalling preset 6\n";
-    }else if(_joystick->button(9) && !_prev_button[9]){
-        _camera->recall_preset(7);
-        cout << setw(12) << _camera->name() << "\tRecalling preset 7\n";
-    }else if(_joystick->button(10) && !_prev_button[10]){
-        _camera->recall_preset(8);
-        cout << setw(12) << _camera->name() << "\tRecalling preset 8\n";
-    }else if(_joystick->button(11) && !_prev_button[11]){
-        _camera->recall_preset(9);
-        cout << setw(12) << _camera->name() << "\tRecalling preset 9\n";
+    } else if (_joystick->button(3)) {
+        if(_joystick->button(2) && !_prev_button[2]) {
+            _camera->save_preset(0);
+            cout << setw(12) << _camera->name() << "\tSaving preset 0\n";
+        } else if(_joystick->button(4) && !_prev_button[4]) {
+            _camera->save_preset(2);
+            cout << setw(12) << _camera->name() << "\tSaving preset 2\n";
+        } else if(_joystick->button(5) && !_prev_button[5]) {
+            _camera->save_preset(3);
+            cout << setw(12) << _camera->name() << "\tSaving preset 3\n";
+        } else if(_joystick->button(6) && !_prev_button[6]){
+            _camera->save_preset(4);
+            cout << setw(12) << _camera->name() << "\tSaving preset 4\n";
+        } else if(_joystick->button(7) && !_prev_button[7]){
+            _camera->save_preset(5);
+            cout << setw(12) << _camera->name() << "\tSaving preset 5\n";
+        } else if(_joystick->button(8) && !_prev_button[8]){
+            _camera->save_preset(6);
+            cout << setw(12) << _camera->name() << "\tSaving preset 6\n";
+        } else if(_joystick->button(9) && !_prev_button[9]){
+            _camera->save_preset(7);
+            cout << setw(12) << _camera->name() << "\tSaving preset 7\n";
+        } else if(_joystick->button(10) && !_prev_button[10]){
+            _camera->save_preset(8);
+            cout << setw(12) << _camera->name() << "\tSaving preset 8\n";
+        } else if(_joystick->button(11) && !_prev_button[11]){
+            _camera->save_preset(9);
+            cout << setw(12) << _camera->name() << "\tSaving preset 9\n";
+        }
+    } else {
+        if(_joystick->button(2) && !_prev_button[2]) {
+            _camera->recall_preset(0);
+            cout << setw(12) << _camera->name() << "\tRecalling preset 0\n";
+        } else if(_joystick->button(4) && !_prev_button[4]) {
+            _camera->recall_preset(2);
+            cout << setw(12) << _camera->name() << "\tRecalling preset 2\n";
+        } else if(_joystick->button(5) && !_prev_button[5]) {
+            _camera->recall_preset(3);
+            cout << setw(12) << _camera->name() << "\tRecalling preset 3\n";
+        } else if(_joystick->button(6) && !_prev_button[6]){
+            _camera->recall_preset(4);
+            cout << setw(12) << _camera->name() << "\tRecalling preset 4\n";
+        } else if(_joystick->button(7) && !_prev_button[7]){
+            _camera->recall_preset(5);
+            cout << setw(12) << _camera->name() << "\tRecalling preset 5\n";
+        } else if(_joystick->button(8) && !_prev_button[8]){
+            _camera->recall_preset(6);
+            cout << setw(12) << _camera->name() << "\tRecalling preset 6\n";
+        } else if(_joystick->button(9) && !_prev_button[9]){
+            _camera->recall_preset(7);
+            cout << setw(12) << _camera->name() << "\tRecalling preset 7\n";
+        } else if(_joystick->button(10) && !_prev_button[10]){
+            _camera->recall_preset(8);
+            cout << setw(12) << _camera->name() << "\tRecalling preset 8\n";
+        } else if(_joystick->button(11) && !_prev_button[11]){
+            _camera->recall_preset(9);
+            cout << setw(12) << _camera->name() << "\tRecalling preset 9\n";
+        }
     }
 }
 
