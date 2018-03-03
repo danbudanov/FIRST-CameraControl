@@ -63,11 +63,11 @@ int main(){
 
     auto t = chrono::system_clock::now();
 
-	while(running){
+    while(running){
         for_each(controllers.begin(), controllers.end(), bind(&Controller::update, placeholders::_1));
         t += 10ms;
         this_thread::sleep_until(t);
-	}
+    }
 
     return 0;
 }

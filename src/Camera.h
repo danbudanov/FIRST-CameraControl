@@ -51,6 +51,18 @@ public:
         return _name;
     }
 
+    inline std::string address() const {
+	return _address;
+    }
+
+    inline uint8_t default_preset() {
+	return _default_preset;
+    }
+
+    inline boost::asio::io_service& io_service() const {
+        return _io_service;
+    }
+
     static inline uint8_t pan_max() {
         return 24;
     }
@@ -66,6 +78,7 @@ public:
 private:
 
     std::string _name;
+    std::string _address;
 
     uint8_t _default_preset;
 

@@ -97,6 +97,13 @@ std::shared_ptr<Camera> Controller::camera() const {
 }
 
 void Controller::button_control() {
+    if (_joystick->button(1) && !_prev_button[1]) {
+        cout << "*** reinit camera: " << _camera->name() << "\n";
+	_camera = make_shared<Camera>(_camera->name(), _camera->address(), _camera->default_preset(), _camera->io_service());
+        cout << "*** reinit camera: " << _camera->name() << " complete!\n";
+	return;
+    }
+
     // Emergency stop button
     if(_joystick->button(0) && !_prev_button[0]){
         _camera->stop();
@@ -104,11 +111,12 @@ void Controller::button_control() {
     }
 
     // Go to a preset (button pressed down)
-    if(_joystick->button(1) && !_prev_button[1]) {
-        // Default preset position
-        _camera->recall_preset(_camera->default_preset());
-        cout << setw(12) << _camera->name() << "\tRecalling preset " << _camera->default_preset() << "\n";
-    } else if (_joystick->button(3)) {
+//    if(_joystick->button(1) && !_prev_button[1]) {
+//        // Default preset position
+//        _camera->recall_preset(_camera->default_preset());
+//        cout << setw(12) << _camera->name() << "\tRecalling preset " << _camera->default_preset() << "\n";
+//    } else if (_joystick->button(3)) {
+    if (_joystick->button(3)) {
         if(_joystick->button(2) && !_prev_button[2]) {
             _camera->save_preset(0);
             cout << setw(12) << _camera->name() << "\tSaving preset 0\n";
