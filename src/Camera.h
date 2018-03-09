@@ -47,8 +47,14 @@ public:
 
     void stop();
 
+    void reconnect();
+
     inline std::string name() const {
         return _name;
+    }
+
+    inline std::string address() const {
+	return _address;
     }
 
     static inline uint8_t pan_max() {
@@ -66,6 +72,7 @@ public:
 private:
 
     std::string _name;
+    std::string _address;
 
     uint8_t _default_preset;
 

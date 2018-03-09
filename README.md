@@ -50,12 +50,12 @@ This repository contains code used by the [Georgia FIRST Robotics Competition](h
  
  If the camera begins moving unexpectedly, pull the trigger button to send a stop command to the camera.
  
- The camera has the capacity to store 10, user-defined, preset positions. These positions can be recalled using the labeled buttons (3 - 12) on the top and base of the joystick.
+ The camera has the capacity to store 9, user-defined, preset positions. These positions can be recalled using the labeled buttons (3,5-12) on the top and base of the joystick.
   
- The thumb button on the side of the joystick will recall the default preset, configurable in the config file.
+ The thumb button on the side of the joystick will reset the connection to the camera. This should happen nearly immeidately.
  
  #### Troubleshooting
  
- There are a variety of network issues which can cause connection errors between this software and the cameras. In the event of one of these issues, this software will disable the individual camera to prevent the interruption of control for other cameras. Once the connection to the cameras has been reestablished, simply restart the software to reconnect to all cameras.
+ There are a variety of network issues which can cause connection errors between this software and the cameras. In the event of one of these issues, this software will disable the individual camera to prevent the interruption of control for other cameras. If this happens, push the reset button or restart the software once the issue has been resolved. 
  
  
